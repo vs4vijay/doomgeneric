@@ -138,6 +138,11 @@ static void InitSfxModule(boolean use_sfx_prefix)
             if (sound_modules[i]->Init(use_sfx_prefix))
             {
                 sound_module = sound_modules[i];
+                
+                // Initialize M5Stack speaker
+                M5.Speaker.begin();
+                M5.Speaker.mute();
+                
                 return;
             }
         }
@@ -161,6 +166,10 @@ static void InitMusicModule(void)
 
 void I_InitSound(boolean use_sfx_prefix)
 {  
+    // Initialize M5Stack speaker
+    M5.Speaker.begin();
+    M5.Speaker.mute();
+    
     boolean nosound, nosfx, nomusic;
 
     //!

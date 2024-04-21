@@ -176,24 +176,26 @@ void cmap_to_fb(uint8_t * out, uint8_t * in, int in_pixels)
 
 void I_InitGraphics (void)
 {
+    // Initialize M5Stack display
+    M5.begin();
+    M5.Lcd.fillScreen(TFT_BLACK);
+    
     int i;
 
 	memset(&s_Fb, 0, sizeof(struct FB_ScreenInfo));
-	s_Fb.xres = DOOMGENERIC_RESX;
-	s_Fb.yres = DOOMGENERIC_RESY;
+	s_Fb.xres = M5STACK_SCREEN_WIDTH;
+	s_Fb.yres = M5STACK_SCREEN_HEIGHT;
 	s_Fb.xres_virtual = s_Fb.xres;
 	s_Fb.yres_virtual = s_Fb.yres;
-	s_Fb.bits_per_pixel = 32;
+	s_Fb.bits_per_pixel = 16;
 
-	s_Fb.blue.length = 8;
-	s_Fb.green.length = 8;
-	s_Fb.red.length = 8;
-	s_Fb.transp.length = 8;
-
+	s_Fb.blue.length = 5;
+	s_Fb.green.length = 6;  
+	s_Fb.red.length = 5;
+	
 	s_Fb.blue.offset = 0;
-	s_Fb.green.offset = 8;
-	s_Fb.red.offset = 16;
-	s_Fb.transp.offset = 24;
+	s_Fb.green.offset = 5;
+	s_Fb.red.offset = 11;
 	
 
     printf("I_InitGraphics: framebuffer: x_res: %d, y_res: %d, x_virtual: %d, y_virtual: %d, bpp: %d\n",
@@ -277,7 +279,7 @@ void I_FinishUpdate (void)
         for (i = 0; i < fb_scaling; i++) {
             line_out += x_offset;
 #ifdef CMAP256
-            for (fb_scaling == 1) {
+            if (fb_scaling == 1) {
                 memcpy(line_out, line_in, SCREENWIDTH); /* fb_width is bigger than Doom SCREENWIDTH... */
             } else {
                 //XXX FIXME fb_scaling support!
@@ -292,6 +294,9 @@ void I_FinishUpdate (void)
     }
 
 	DG_DrawFrame();
+
+    // Write the frame buffer to the M5Stack display
+    M5.Lcd.drawRGBBitmap(0, 0, DG_ScreenBuffer, SCREENWIDTH, SCREENHEIGHT);
 }
 
 //
