@@ -47,6 +47,11 @@ int vanilla_keyboard_mapping = 1;
 
 static int shiftdown = 0;
 
+static int ReadButton(int buttonPin)
+{
+    return digitalRead(buttonPin);
+}
+
 // Lookup table for mapping AT keycodes to their doom keycode
 static const char at_to_doom[] =
 {
@@ -278,6 +283,8 @@ static void UpdateShiftStatus(int pressed, unsigned char key)
 
 void I_GetEvent(void)
 {
+    I_GetM5StackButtons();
+    
     event_t event;
     int pressed;
     unsigned char key;
