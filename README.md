@@ -14,6 +14,7 @@ Of course Doom is already portable but with doomgeneric it is possible with just
 To try it you will need a WAD file (game data). If you don't own the game, shareware version is freely available (doom1.wad).
 
 - https://doomwiki.org/wiki/DOOM1.WAD
+- https://freedoom.github.io/index.html
 
 # porting
 Create a file named doomgeneric_yourplatform.c and just implement these functions to suit your platform.

@@ -10,11 +10,17 @@ static unsigned short s_KeyQueue[KEYQUEUE_SIZE];
 static unsigned int s_KeyQueueWriteIndex = 0;
 static unsigned int s_KeyQueueReadIndex = 0;
 
+#ifdef __cplusplus
 extern "C"
 {
+#endif
+
   void doomgeneric_Create(int argc, char **argv);
   void doomgeneric_Tick();
+
+#ifdef __cplusplus
 }
+#endif
 
 void DG_Init()
 {
