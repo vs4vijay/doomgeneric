@@ -1,0 +1,59 @@
+---
+name: Compile M5 Doom
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - main
+    tags:
+      - "v*"
+  pull_request:
+    branches:
+      - master
+      - main
+
+jobs:
+
+  compile_m5doom_platformio:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.platformio/.cache
+          key: ${{ runner.os }}-pio
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+      
+      - name: Install PlatformIO core
+        run: pip install --upgrade platformio
+
+      - name: Build PlatformIO project
+        run: pio run
+
+      - name: List all files
+        if: always()
+        continue-on-error: true
+        run: |
+          set -x
+          pwd
+          ls -all
+          tree
+
+      # TODO: Validate
+        
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          path: .pio/build/m5cardputer/firmware.bin
+          name: M5Doom
+          compression-level: 0
+          if-no-files-found: error

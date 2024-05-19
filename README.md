@@ -1,4 +1,13 @@
-# doomgeneric
+IN-DEVELOPMENT
+
+# M5 Doom
+
+Relive the Classic Doom Experience on Your M5Cardputer!
+
+Welcome to the Doom port for M5 Stack devices, specifically for M5Cardputer! This project aims to bring the classic Doom experience to the M5 Stack platform, allowing you to relive the iconic game on modern hardware.
+
+---
+
 The purpose of doomgeneric is to make porting Doom easier.
 Of course Doom is already portable but with doomgeneric it is possible with just a few functions.
 
