@@ -10,6 +10,12 @@ static unsigned short s_KeyQueue[KEYQUEUE_SIZE];
 static unsigned int s_KeyQueueWriteIndex = 0;
 static unsigned int s_KeyQueueReadIndex = 0;
 
+extern "C"
+{
+  void doomgeneric_Create(int argc, char **argv);
+  void doomgeneric_Tick();
+}
+
 void DG_Init()
 {
   M5.begin();
