@@ -4,7 +4,7 @@
 
 #include "doomgeneric.h"
 
-uint32_t* DG_ScreenBuffer = 0;
+pixel_t* DG_ScreenBuffer = NULL;
 
 void M_FindResponseFile(void);
 void D_DoomMain (void);

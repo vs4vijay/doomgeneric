@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef FEATURE_SOUND
+#if defined(FEATURE_SOUND) && !defined(__DJGPP__)
 #include <SDL_mixer.h>
 #endif
 
@@ -59,24 +59,6 @@ static music_module_t *music_module = NULL;
 
 int snd_musicdevice = SNDDEVICE_SB;
 int snd_sfxdevice = SNDDEVICE_SB;
-
-// Sound modules
-
-extern void I_InitTimidityConfig(void);
-#ifdef FEATURE_SOUND
-extern sound_module_t* DG_sound_module;
-extern music_module_t* DG_music_module;
-#endif
-extern sound_module_t sound_pcsound_module;
-extern music_module_t music_opl_module;
-
-// For OPL module:
-
-extern int opl_io_port;
-
-// For native music module:
-
-extern char *timidity_cfg_path;
 
 // DOS-specific options: These are unused but should be maintained
 // so that the config file can be shared between chocolate

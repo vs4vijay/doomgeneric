@@ -4,11 +4,27 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#ifndef DOOMGENERIC_RESX
 #define DOOMGENERIC_RESX 640
+#endif  // DOOMGENERIC_RESX
+
+#ifndef DOOMGENERIC_RESY
 #define DOOMGENERIC_RESY 400
+#endif  // DOOMGENERIC_RESY
 
 
-extern uint32_t* DG_ScreenBuffer;
+#ifdef CMAP256
+
+typedef uint8_t pixel_t;
+
+#else  // CMAP256
+
+typedef uint32_t pixel_t;
+
+#endif  // CMAP256
+
+
+extern pixel_t* DG_ScreenBuffer;
 
 void doomgeneric_Create(int argc, char **argv);
 void doomgeneric_Tick();

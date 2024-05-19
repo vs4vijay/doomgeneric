@@ -75,14 +75,19 @@ static struct FB_ScreenInfo s_Fb;
 int fb_scaling = 1;
 int usemouse = 0;
 
-struct color {
-    uint32_t b:8;
-    uint32_t g:8;
-    uint32_t r:8;
-    uint32_t a:8;
-};
+
+#ifdef CMAP256
+
+boolean palette_changed;
+struct color colors[256];
+
+#else  // CMAP256
 
 static struct color colors[256];
+
+
+#endif  // CMAP256
+
 
 void I_GetEvent(void);
 
@@ -183,6 +188,13 @@ void I_InitGraphics (void)
 	s_Fb.yres = DOOMGENERIC_RESY;
 	s_Fb.xres_virtual = s_Fb.xres;
 	s_Fb.yres_virtual = s_Fb.yres;
+
+#ifdef CMAP256
+
+	s_Fb.bits_per_pixel = 8;
+
+#else  // CMAP256
+
 	s_Fb.bits_per_pixel = 32;
 
 	s_Fb.blue.length = 8;
@@ -195,6 +207,7 @@ void I_InitGraphics (void)
 	s_Fb.red.offset = 16;
 	s_Fb.transp.offset = 24;
 	
+#endif  // CMAP256
 
     printf("I_InitGraphics: framebuffer: x_res: %d, y_res: %d, x_virtual: %d, y_virtual: %d, bpp: %d\n",
             s_Fb.xres, s_Fb.yres, s_Fb.xres_virtual, s_Fb.yres_virtual, s_Fb.bits_per_pixel);
@@ -277,10 +290,17 @@ void I_FinishUpdate (void)
         for (i = 0; i < fb_scaling; i++) {
             line_out += x_offset;
 #ifdef CMAP256
-            for (fb_scaling == 1) {
+            if (fb_scaling == 1) {
                 memcpy(line_out, line_in, SCREENWIDTH); /* fb_width is bigger than Doom SCREENWIDTH... */
             } else {
-                //XXX FIXME fb_scaling support!
+                int j;
+
+                for (j = 0; j < SCREENWIDTH; j++) {
+                    int k;
+                    for (k = 0; k < fb_scaling; k++) {
+                        line_out[j * fb_scaling + k] = line_in[j];
+                    }
+                }
             }
 #else
             //cmap_to_rgb565((void*)line_out, (void*)line_in, SCREENWIDTH);
@@ -336,6 +356,12 @@ void I_SetPalette (byte* palette)
         colors[i].g = gammatable[usegamma][*palette++];
         colors[i].b = gammatable[usegamma][*palette++];
     }
+
+#ifdef CMAP256
+
+    palette_changed = true;
+
+#endif  // CMAP256
 }
 
 // Given an RGB value, find the closest matching palette index.

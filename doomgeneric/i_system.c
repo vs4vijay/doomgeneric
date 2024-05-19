@@ -264,7 +264,7 @@ void I_Quit (void)
 #endif
 }
 
-#if !defined(_WIN32) && !defined(__MACOSX__)
+#if !defined(_WIN32) && !defined(__MACOSX__) && !defined(__DJGPP__)
 #define ZENITY_BINARY "/usr/bin/zenity"
 
 // returns non-zero if zenity is available
@@ -347,7 +347,7 @@ static int ZenityErrorBox(char *message)
     return result;
 }
 
-#endif /* !defined(_WIN32) && !defined(__MACOSX__) */
+#endif /* !defined(_WIN32) && !defined(__MACOSX__) && !defined(__DJGPP__) */
 
 
 //
@@ -448,6 +448,12 @@ void I_Error (char *error, ...)
                                         message,
                                         NULL);
     }
+#elif defined(__DJGPP__)
+    {
+        printf("%s\n", msgbuf);
+        exit(-1);
+    }
+
 #else
     {
         ZenityErrorBox(msgbuf);
