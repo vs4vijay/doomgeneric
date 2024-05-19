@@ -76,22 +76,24 @@ int DG_GetKey(int *pressed, unsigned char *doomKey)
   return 0;
 }
 
-// void setup() {
-//   // Initialization code here
-// }
-
-// void loop() {
-//   // You can leave this empty if not needed
-// }
-
-int main(int argc, char **argv)
+void setup()
 {
-  doomgeneric_Create(argc, argv);
-
-  while (1)
-  {
-    doomgeneric_Tick();
-  }
-
-  return 0;
+  doomgeneric_Create(0, nullptr);
 }
+
+void loop()
+{
+  doomgeneric_Tick();
+}
+
+// int main(int argc, char **argv)
+// {
+//   doomgeneric_Create(argc, argv);
+
+//   while (1)
+//   {
+//     doomgeneric_Tick();
+//   }
+
+//   return 0;
+// }
