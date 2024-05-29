@@ -24,7 +24,7 @@ To try it you will need a WAD file (game data). If you don't own the game, share
 ```bash
 
 # Windows with SDL
-make -f Makefile.sdl
+make -j4 -f Makefile.sdl
 ```
 
 ---
