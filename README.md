@@ -16,6 +16,19 @@ To try it you will need a WAD file (game data). If you don't own the game, share
 - https://doomwiki.org/wiki/DOOM1.WAD
 - https://freedoom.github.io/index.html
 
+
+---
+
+## Compiling 
+
+```bash
+
+# Windows with SDL
+make -f Makefile.sdl
+
+
+---
+
 # porting
 Create a file named doomgeneric_yourplatform.c and just implement these functions to suit your platform.
 * DG_Init
