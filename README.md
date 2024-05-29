@@ -15,7 +15,7 @@ To try it you will need a WAD file (game data). If you don't own the game, share
 
 - https://doomwiki.org/wiki/DOOM1.WAD
 - https://freedoom.github.io/index.html
-
+- Miniwad
 
 ---
 
@@ -25,11 +25,24 @@ To try it you will need a WAD file (game data). If you don't own the game, share
 
 # Windows with SDL
 make -f Makefile.sdl
+```
+
+---
+
+## Running
+
+```bash
+
+# Windows with SDL
+./doomgeneric.exe -iwad doom1.wad
+./doomgeneric.exe -iwad miniwad.wad
+
+```
 
 
 ---
 
-# porting
+## porting
 Create a file named doomgeneric_yourplatform.c and just implement these functions to suit your platform.
 * DG_Init
 * DG_DrawFrame
@@ -66,27 +79,27 @@ int main(int argc, char **argv)
 }
 ```
 
-# sound
+## sound
 Sound is much harder to implement! If you need sound, take a look at SDL port. It fully supports sound and music! Where to start? Define FEATURE_SOUND, assign DG_sound_module and DG_music_module.
 
-# platforms
+## platforms
 Ported platforms include Windows, X11, SDL, emscripten. Just look at (doomgeneric_win.c, doomgeneric_xlib.c, doomgeneric_sdl.c).
 Makefiles provided for each platform.
 
-## emscripten
+### emscripten
 You can try it directly here:
 https://ozkl.github.io/doomgeneric/
 
 emscripten port is based on SDL port, so it supports sound and music! For music, timidity backend is used.
 
-## Windows
+### Windows
 ![Windows](screenshots/windows.png)
 
-## X11 - Ubuntu
+### X11 - Ubuntu
 ![Ubuntu](screenshots/ubuntu.png)
 
-## X11 - FreeBSD
+### X11 - FreeBSD
 ![FreeBSD](screenshots/freebsd.png)
 
-## SDL
+### SDL
 ![SDL](screenshots/sdl.png)
