@@ -16,7 +16,7 @@ SDL_CFLAGS = `sdl2-config --cflags`
 SDL_LIBS = `sdl2-config --cflags --libs` -lSDL2_mixer
 
 
-CC=clang # clang or gcc or g++
+CC=gcc # clang or gcc or g++
 CFLAGS+=-DFEATURE_SOUND $(SDL_CFLAGS)
 LDFLAGS+=
 # LDFLAGS+=-Wl,--gc-sections
