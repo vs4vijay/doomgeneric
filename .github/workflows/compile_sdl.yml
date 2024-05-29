@@ -1,0 +1,42 @@
+---
+name: Compile SDL
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - main
+    tags:
+      - "v*"
+  pull_request:
+    branches:
+      - master
+      - main
+
+jobs:
+  build:
+    # runs-on: ubuntu-latest
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: libsdl-org/setup-sdl@main
+        id: sdl
+        with:
+          install-linux-dependencies: true
+          version: 2-latest
+          version-sdl-image: 2-latest
+
+      - name: "Build Doom with SDL"
+        working-directory: doomgeneric
+        run: |
+          make -j2 -f Makefile.sdl
+
+      - name: Upload Binary
+        uses: actions/upload-artifact@v4
+        with:
+          path:
+          name: doomgeneric.exe
+          compression-level: 0
+          if-no-files-found: error
