@@ -48,8 +48,8 @@ jobs:
             git
             base-devel 
             mingw-w64-ucrt-x86_64-toolchain
-            mingw-w64-ucrt-x86_64-SDL2
-            mingw-w64-ucrt-x86_64-SDL2_mixer
+          # mingw-w64-ucrt-x86_64-SDL2
+          # mingw-w64-ucrt-x86_64-SDL2_mixer
           # pacboy: >-
           #   make:p
           #   cmake:p
@@ -58,12 +58,13 @@ jobs:
           #   libxml2:p
           #   python-setuptools:p
 
-      # - uses: libsdl-org/setup-sdl@main
-      #   id: sdl
-      #   with:
-      #     install-linux-dependencies: true
-      #     version: 2-latest
-      #     version-sdl-image: 2-latest
+      - uses: libsdl-org/setup-sdl@main
+        id: sdl
+        with:
+          version: 2-latest
+          version-sdl-image: 2-latest
+          shell: msys2 {0}
+          install-linux-dependencies: true
 
       - name: "Build Doom with SDL"
         working-directory: doomgeneric
