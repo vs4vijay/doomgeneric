@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       tag_name:
-        description: 'Release Tag Name'
+        description: "Release Tag Name"
         required: false
         default: nightly
   push:
@@ -28,15 +28,16 @@ jobs:
     defaults:
       run:
         shell: msys2 {0}
-    
+
     steps:
       - uses: actions/checkout@v4
-      
+
       - if: github.event_name == 'workflow_dispatch'
         run: echo "TAG_NAME=${{ github.event.inputs.tag_name }}" >> $GITHUB_ENV
+
       - if: github.event_name == 'schedule'
         run: echo 'TAG_NAME=nightly' >> $GITHUB_ENV
-      
+
       - uses: msys2/setup-msys2@v2
         with:
           msystem: UCRT64
@@ -70,10 +71,12 @@ jobs:
         run: |
           make -j2 -f Makefile.sdl
 
+          mv doomgeneric.exe M5Doom.exe
+
       - name: Upload Binary
         uses: actions/upload-artifact@v4
         with:
-          path:
-          name: doomgeneric.exe
+          path: M5Doom.exe
+          name: M5Doom.exe
           compression-level: 0
           if-no-files-found: error
