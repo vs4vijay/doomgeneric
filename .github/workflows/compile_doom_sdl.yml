@@ -2,13 +2,20 @@
 name: Compile Doom SDL
 
 on:
+  # schedule:
+  #   - cron: '0 0 * * *' # run at 12:00 AM UTC
   workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Release Tag Name'
+        required: false
+        default: nightly
   push:
     branches:
       - master
       - main
     tags:
-      - "v*"
+      - v[0-9]+.[0-9]+.[0-9]+
   pull_request:
     branches:
       - master
@@ -25,30 +32,37 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+      - if: github.event_name == 'workflow_dispatch'
+        run: echo "TAG_NAME=${{ github.event.inputs.tag_name }}" >> $GITHUB_ENV
+      - if: github.event_name == 'schedule'
+        run: echo 'TAG_NAME=nightly' >> $GITHUB_ENV
+      
       - uses: msys2/setup-msys2@v2
         with:
           msystem: UCRT64
           update: true
           path-type: inherit
-          # install: >-
-          #   make
-          #   git
-          #   base-devel 
-          #   mingw-w64-ucrt-x86_64-toolchain
-          pacboy: >-
-            make:p
-            cmake:p
-            cc:p
+          install: >-
+            make
+            git
+            base-devel 
+            mingw-w64-ucrt-x86_64-toolchain
+            mingw-w64-ucrt-x86_64-SDL2
+            mingw-w64-ucrt-x86_64-SDL2_mixer
+          # pacboy: >-
+          #   make:p
+          #   cmake:p
+          #   cc:p
           #   glib2:p
           #   libxml2:p
           #   python-setuptools:p
 
-      - uses: libsdl-org/setup-sdl@main
-        id: sdl
-        with:
-          install-linux-dependencies: true
-          version: 2-latest
-          version-sdl-image: 2-latest
+      # - uses: libsdl-org/setup-sdl@main
+      #   id: sdl
+      #   with:
+      #     install-linux-dependencies: true
+      #     version: 2-latest
+      #     version-sdl-image: 2-latest
 
       - name: "Build Doom with SDL"
         working-directory: doomgeneric
