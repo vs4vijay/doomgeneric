@@ -29,15 +29,19 @@ jobs:
         with:
           msystem: UCRT64
           update: true
+          path-type: inherit
           # install: >-
           #   make
+          #   git
+          #   base-devel 
+          #   mingw-w64-ucrt-x86_64-toolchain
           pacboy: >-
             make:p
             cmake:p
             cc:p
-            glib2:p
-            libxml2:p
-            python-setuptools:p
+          #   glib2:p
+          #   libxml2:p
+          #   python-setuptools:p
 
       - uses: libsdl-org/setup-sdl@main
         id: sdl
@@ -48,6 +52,7 @@ jobs:
 
       - name: "Build Doom with SDL"
         working-directory: doomgeneric
+        shell: msys2 {0}
         run: |
           make -j2 -f Makefile.sdl
 
