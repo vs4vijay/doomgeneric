@@ -29,14 +29,15 @@ jobs:
         with:
           msystem: UCRT64
           update: true
-          install: >-
-            make
-          # pacboy: >-
-          #   cmake:p
-          #   cc:p
-          #   glib2:p
-          #   libxml2:p
-          #   python-setuptools:p
+          # install: >-
+          #   make
+          pacboy: >-
+            make:p
+            cmake:p
+            cc:p
+            glib2:p
+            libxml2:p
+            python-setuptools:p
 
       - uses: libsdl-org/setup-sdl@main
         id: sdl
