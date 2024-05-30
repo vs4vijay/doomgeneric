@@ -1,5 +1,5 @@
 ---
-name: Compile SDL
+name: Compile Doom SDL
 
 on:
   workflow_dispatch:
@@ -15,11 +15,26 @@ on:
       - main
 
 jobs:
-  build:
+  windows_build:
     # runs-on: ubuntu-latest
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    
     steps:
       - uses: actions/checkout@v4
+      
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          # pacboy: >-
+          #   cmake:p
+          #   cc:p
+          #   glib2:p
+          #   libxml2:p
+          #   python-setuptools:p
 
       - uses: libsdl-org/setup-sdl@main
         id: sdl
