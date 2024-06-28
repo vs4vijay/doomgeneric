@@ -39,6 +39,29 @@ make -j4 -f Makefile.sdl
 
 ```
 
+---
+
+## Porting to M5Stack CardPuter
+
+To bring the classic Doom experience to your M5Stack CardPuter, follow these setup instructions:
+
+### Hardware Requirements
+
+- M5Stack CardPuter
+- SD card with at least 16MB of free space
+- USB-C cable for programming and power supply
+
+### Compiling and Uploading
+
+1. Install [PlatformIO](https://platformio.org/) and the necessary ESP32 platform support.
+2. Clone this repository to your local machine.
+3. Place your WAD file (e.g., `doom1.wad`) in the root of the SD card and insert it into the M5Stack CardPuter.
+4. Navigate to the project directory and open the `platformio.ini` file. Ensure the correct environment is selected for your M5Stack CardPuter model.
+5. Compile the project by running `pio run` in the terminal.
+6. Upload the game to your M5Stack CardPuter using `pio run --target upload`.
+7. Once uploaded, reset the M5Stack CardPuter to start playing Doom!
+
+Enjoy Doom on your M5Stack CardPuter and relive the classic gaming experience!
 
 ---
 
