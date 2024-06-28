@@ -1,5 +1,4 @@
-// #include "doomgeneric.h"
-#include "../doomgeneric/doomgeneric.h"
+#include "doomgeneric.h"
 #include <M5Cardputer.h>
 #include <M5Unified.h>
 #include <M5GFX.h>

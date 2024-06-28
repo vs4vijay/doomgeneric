@@ -1,0 +1,37 @@
+# Makefile for compiling Doom for ESP32 based M5Stack CardPuter
+
+# Compiler settings
+CC = xtensa-esp32-elf-gcc
+CXX = xtensa-esp32-elf-g++
+CFLAGS = -Iinclude -DM5STACK_MPU6886 -O3
+CXXFLAGS = $(CFLAGS) -std=c++11
+LDFLAGS = -Llib -lM5Stack -lM5GFX -lM5Unified -lM5Cardputer
+
+# Source files and object files
+SRCS = $(wildcard src/*.cpp) $(wildcard doomgeneric/*.c)
+OBJS = $(SRCS:.cpp=.o) $(SRCS:.c=.o)
+
+# Target binary
+TARGET = doom_m5card
+
+# Default target
+all: $(TARGET)
+
+# Compile and link
+$(TARGET): $(OBJS)
+	$(CXX) -o $@ $^ $(LDFLAGS)
+
+# Compile C source files
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Compile C++ source files
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Clean target
+clean:
+	rm -f $(OBJS) $(TARGET)
+
+# If possible, use CMake for more advanced build configurations
+# Note: CMakeLists.txt must be provided in the project root for CMake to work
